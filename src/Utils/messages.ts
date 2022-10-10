@@ -454,6 +454,11 @@ export const generateWAMessageContent = async(
 		m[messageType].contextInfo.mentionedJid = message.mentions
 	}
 
+	if('contextInfo' in message && message) {
+		const [messageType] = Object.keys(m)
+		m[messageType].contextInfo = m[messageType] || { }
+	}
+
 	return WAProto.Message.fromObject(m)
 }
 
