@@ -282,7 +282,7 @@ export const generateWAMessageContent = async(
 ) => {
 	let m: WAMessageContent = {}
 	if('text' in message) {
-		const extContent = { text: message.text } as WATextMessage
+		const extContent = { ...message, text: message.text } as WATextMessage
 
 		let urlInfo = message.linkPreview
 		if(typeof urlInfo === 'undefined') {
@@ -453,12 +453,7 @@ export const generateWAMessageContent = async(
 		m[messageType].contextInfo = m[messageType] || { }
 		m[messageType].contextInfo.mentionedJid = message.mentions
 	}
-
-	if('contextInfo' in message && message) {
-		const [messageType] = Object.keys(m)
-		m[messageType].contextInfo = m[messageType] || { }
-	}
-
+	
 	return WAProto.Message.fromObject(m)
 }
 
